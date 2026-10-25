@@ -1,0 +1,28 @@
+{{ define "main" }}
+<div class="wrap narrow-list">
+  {{ partial "page-head.html" . }}
+  {{- $books := where (where site.Pages "Section" "works") "Kind" "section" -}}
+  {{- $books = where $books "Parent.IsHome" false -}}
+  {{- if $books }}
+  <section class="arch-year">
+    <h2>作品</h2>
+    <ul>
+      {{- range $books.ByWeight }}
+      <li><span class="chip">{{ .Params.genre }}</span><a href="{{ .RelPermalink }}">{{ .Title }}</a><small>{{ partial "wordtext.html" . }}</small></li>
+      {{- end }}
+    </ul>
+  </section>
+  {{- end }}
+  {{- $stream := where site.RegularPages "Section" "in" (slice "posts" "photography" "music") -}}
+  {{- range $stream.GroupByDate "2006" }}
+  <section class="arch-year">
+    <h2>{{ .Key }}</h2>
+    <ul>
+      {{- range .Pages }}
+      <li><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "01.02" }}</time><span class="chip">{{ partial "label.html" . }}</span><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+      {{- end }}
+    </ul>
+  </section>
+  {{- end }}
+</div>
+{{ end }}

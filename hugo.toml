@@ -1,0 +1,154 @@
+# ============================================================
+#  思文败类 · 站点配置
+#  上线前请把 baseURL 改成你的域名（没有域名时用 https://用户名.github.io/）
+# ============================================================
+baseURL = "https://example.com/"
+languageCode = "zh-CN"
+defaultContentLanguage = "zh"
+title = "思文败类"
+hasCJKLanguage = true          # 中文字数、摘要、阅读时长依赖这一项
+enableRobotsTXT = true
+summaryLength = 70
+timeZone = "Asia/Shanghai"
+
+[pagination]
+  pagerSize = 10
+
+[taxonomies]
+  tag = "tags"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true            # 允许在 Markdown 里嵌入 iframe（Bandcamp / SoundCloud 等）
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.cjk]
+        enable = true
+        eastAsianLineBreaks = true   # 中文段落内的换行不会变成空格
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+
+[related]
+  includeNewer = true
+  threshold = 0
+  toLower = false
+  [[related.indices]]
+    name = "tags"
+    weight = 100
+  [[related.indices]]
+    name = "date"
+    weight = 10
+
+[outputs]
+  home = ["HTML", "RSS"]
+
+# ---------------- 导航 ----------------
+[[menus.main]]
+  name = "首页"
+  pageRef = "/"
+  weight = 1
+  [menus.main.params]
+    key = "home"
+[[menus.main]]
+  name = "文章"
+  pageRef = "/posts"
+  weight = 2
+  [menus.main.params]
+    key = "posts"
+[[menus.main]]
+  name = "作品"
+  pageRef = "/works"
+  weight = 3
+  [menus.main.params]
+    key = "works"
+[[menus.main]]
+  name = "摄影"
+  pageRef = "/photography"
+  weight = 4
+  [menus.main.params]
+    key = "photography"
+[[menus.main]]
+  name = "音乐"
+  pageRef = "/music"
+  weight = 5
+  [menus.main.params]
+    key = "music"
+[[menus.main]]
+  name = "归档"
+  pageRef = "/archives"
+  weight = 6
+  [menus.main.params]
+    key = "archives"
+[[menus.main]]
+  name = "关于"
+  pageRef = "/about"
+  weight = 7
+  [menus.main.params]
+    key = "about"
+
+# ---------------- 站点信息 ----------------
+[params]
+  description = "写作、阅读、摄影、音乐与生活——陈玄的个人网站。"
+  tagline = "写作 · 阅读 · 摄影 · 音乐 · 生活"
+  footerTagline = "文字 · 思考 · 生活"
+  author = "陈玄"
+  authorTitle = "写作者 · 随笔创作者"
+  authorSubtitle = "文学评论人"
+  authorQuote = "生活不止眼前的苟且，还有诗和远方。"
+  authorAvatar = "images/avatar.jpg"
+  seal = "陈玄"                       # 印章里的两个字
+  # 版权声明：全文公开的原创作品，请自行决定保留所有权利或选用 CC 协议
+  copyright = "© 陈玄，保留所有权利。"
+  # 示例：copyright = "除特别标注外，本站作品以 CC BY-NC-ND 4.0 协议发布。"
+  related = true
+  # 音频放在对象存储（如 Cloudflare R2）时，在这里填公开地址前缀，
+  # 曲目的 file 写相对文件名即可；留空则只读取专辑文件夹里的音频。
+  audioBase = ""
+
+  # 首页
+  [params.home]
+    heroImage = "images/hero.jpg"
+    heroTitle = "在文字、影像与音乐之间，<br>记录这个复杂而有趣的世界。"
+    heroText = "我是陈玄，一个写作、阅读、摄影、音乐的普通人。<br>在这里，分享我的思考与生活，也收藏那些值得记忆的瞬间。"
+    sideImage = "images/covers/side.jpg"
+    sideCaption = "行走在路上，<br>把风景收进心里。"
+
+    [[params.home.cards]]
+      title = "文学作品"
+      desc = "小说 · 随笔 · 书评 · 评论"
+      link = "/works/"
+      image = "images/covers/card-works.jpg"
+    [[params.home.cards]]
+      title = "摄影作品"
+      desc = "相册 · 系列 · 摄影日记"
+      link = "/photography/"
+      image = "images/covers/card-photo.jpg"
+    [[params.home.cards]]
+      title = "音乐专辑"
+      desc = "原创 · 作品 · 创作记录"
+      link = "/music/"
+      image = "images/covers/card-music.jpg"
+    [[params.home.cards]]
+      title = "阅读与生活"
+      desc = "在读 · 日常 · 个人记录"
+      link = "/posts/"
+      image = "images/covers/card-life.jpg"
+
+  # 联系与社交（icon 可选：mail / rss / camera / music / link）
+  [[params.social]]
+    name = "邮箱"
+    url = "mailto:qoosky@proton.me"
+    icon = "mail"
+  [[params.social]]
+    name = "RSS 订阅"
+    url = "/index.xml"
+    icon = "rss"
+  [[params.social]]
+    name = "Instagram"
+    url = "https://www.instagram.com/"
+    icon = "camera"
+  [[params.social]]
+    name = "Bandcamp"
+    url = "https://bandcamp.com/"
+    icon = "music"

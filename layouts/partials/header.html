@@ -1,0 +1,20 @@
+{{- $key := "" -}}
+{{- if .IsHome }}{{ $key = "home" }}{{ else if .Section }}{{ $key = .Section }}{{ else if .File }}{{ $key = .File.ContentBaseName }}{{ end -}}
+<header class="site-header">
+  <div class="wrap header-in">
+    <a class="brand" href="{{ "/" | relURL }}" aria-label="{{ site.Title }} 首页">
+      <span class="brand-top"><span class="brand-name">{{ site.Title }}</span>{{ partial "seal.html" . }}</span>
+      <small class="brand-tag">{{ site.Params.tagline }}</small>
+    </a>
+    <nav class="nav" id="site-nav" aria-label="主导航">
+      {{- range site.Menus.main }}
+      <a href="{{ .URL }}"{{ if eq .Params.key $key }} aria-current="page"{{ end }}>{{ .Name }}</a>
+      {{- end }}
+    </nav>
+    <div class="tools">
+      <a class="tool" href="{{ "/search/" | relURL }}" aria-label="搜索">{{ partial "icon.html" "search" }}</a>
+      <button class="tool" type="button" data-theme-toggle aria-label="切换深色模式">{{ partial "icon.html" "moon" }}</button>
+      <button class="tool menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav" aria-label="菜单">{{ partial "icon.html" "menu" }}</button>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,17 @@
+{{ define "main" }}
+<div class="wrap">
+  {{ partial "page-head.html" . }}
+  <div class="album-grid">
+    {{- range .Pages.ByDate.Reverse }}
+    {{- $n := len (.Resources.ByType "image") }}
+    <a class="album-card" href="{{ .RelPermalink }}">
+      <span class="ac-img">{{ partial "img.html" (dict "page" . "width" 720) }}</span>
+      <span class="ac-body">
+        <strong>{{ .Title }}</strong>
+        <span class="ac-meta">{{ .Date.Format "2006.01" }}{{ with .Params.place }} · {{ . }}{{ end }} · {{ $n }} 张</span>
+      </span>
+    </a>
+    {{- end }}
+  </div>
+</div>
+{{ end }}

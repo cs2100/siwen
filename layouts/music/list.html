@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="wrap">
+  {{ partial "page-head.html" . }}
+  <div class="disc-grid">
+    {{- range .Pages.ByDate.Reverse }}
+    <a class="disc-card" href="{{ .RelPermalink }}">
+      <span class="dc-img">{{ partial "img.html" (dict "page" . "width" 600) }}</span>
+      <strong>{{ .Title }}</strong>
+      <span class="ac-meta">{{ .Date.Format "2006.01" }}{{ with .Params.genre }} · {{ . }}{{ end }}{{ with .Params.tracks }} · {{ len . }} 首{{ end }}</span>
+    </a>
+    {{- end }}
+  </div>
+</div>
+{{ end }}

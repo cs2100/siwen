@@ -1,0 +1,16 @@
+<footer class="site-footer">
+  <div class="wrap footer-in">
+    <div class="foot-brand">
+      <span class="brand-top"><span class="brand-name">{{ site.Title }}</span>{{ partial "seal.html" . }}</span>
+      <small>{{ site.Params.footerTagline }}</small>
+    </div>
+    <nav class="foot-nav" aria-label="页脚导航">
+      {{- range site.Menus.main }}<a href="{{ .URL }}">{{ .Name }}</a>{{ end }}
+    </nav>
+    <div class="foot-right">
+      {{ partial "social.html" . }}
+      <p class="copy">{{ site.Params.copyright }} <span class="muted">{{ now.Year }}</span></p>
+    </div>
+  </div>
+  <button class="to-top" type="button" data-to-top aria-label="回到顶部">{{ partial "icon.html" "up" }}</button>
+</footer>

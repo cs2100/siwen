@@ -1,0 +1,13 @@
+{{- /* 取封面资源：先找页面自己文件夹里的图（页面束），再找 assets/ 下的路径。无封面返回 false。 */ -}}
+{{- $p := .page -}}
+{{- $key := .key | default "cover" -}}
+{{- $c := index $p.Params $key -}}
+{{- $res := false -}}
+{{- if $c -}}
+  {{- with $p.Resources.GetMatch $c -}}
+    {{- $res = . -}}
+  {{- else -}}
+    {{- with resources.Get $c -}}{{- $res = . -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $res -}}

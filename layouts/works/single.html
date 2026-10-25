@@ -1,0 +1,32 @@
+{{ define "main" }}
+{{- $book := .Parent -}}
+{{- $pages := $book.Pages.ByWeight -}}
+{{- $idx := 0 -}}{{- $prev := false -}}{{- $next := false -}}
+{{- range $i, $p := $pages -}}
+  {{- if eq $p.RelPermalink $.RelPermalink -}}
+    {{- $idx = add $i 1 -}}
+    {{- if gt $i 0 }}{{ $prev = index $pages (sub $i 1) }}{{ end -}}
+    {{- if lt (add $i 1) (len $pages) }}{{ $next = index $pages (add $i 1) }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+<div class="progress" data-progress aria-hidden="true"><i></i></div>
+<article class="reader" data-book="{{ $book.RelPermalink }}" data-book-title="{{ $book.Title }}" data-chapter-title="{{ .Title }}" data-pagefind-body>
+  <p class="crumb" data-pagefind-ignore><a href="{{ "/works/" | relURL }}">作品</a> / <a href="{{ $book.RelPermalink }}">{{ $book.Title }}</a></p>
+  <header class="reader-head">
+    <h1>{{ .Title }}</h1>
+    <p class="meta" data-pagefind-ignore>{{ $book.Title }} · 第 {{ $idx }} / {{ len $pages }} 篇 · 约 {{ partial "readtime.html" . }} 分钟</p>
+  </header>
+  <div class="reader-tools" role="group" aria-label="阅读设置" data-pagefind-ignore>
+    <button type="button" data-fs="-1" aria-label="缩小字号">A−</button>
+    <button type="button" data-fs="1" aria-label="放大字号">A＋</button>
+    <button type="button" data-theme-toggle aria-label="切换深色模式">{{ partial "icon.html" "moon" }}</button>
+    <a href="{{ $book.RelPermalink }}#toc-h">目录</a>
+  </div>
+  <div class="prose reader-body">{{ .Content }}</div>
+  <nav class="chap-pager" aria-label="章节导航" data-pagefind-ignore>
+    {{- if $prev }}<a class="btn ghost" href="{{ $prev.RelPermalink }}" rel="prev">← {{ $prev.Title }}</a>{{ else }}<span></span>{{ end }}
+    <a class="btn ghost toc-link" href="{{ $book.RelPermalink }}#toc-h">目录</a>
+    {{- if $next }}<a class="btn primary" href="{{ $next.RelPermalink }}" rel="next">{{ $next.Title }} →</a>{{ else }}<span class="end-mark">· 全书完 ·</span>{{ end }}
+  </nav>
+</article>
+{{ end }}

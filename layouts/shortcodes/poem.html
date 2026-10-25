@@ -1,0 +1,2 @@
+{{- /* 诗歌：原样保留换行和缩进。用法：{{< poem >}} 诗句…… {{< /poem >}} */ -}}
+<div class="poem">{{ .Inner | htmlEscape | safeHTML }}</div>

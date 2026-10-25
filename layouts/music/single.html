@@ -1,0 +1,46 @@
+{{ define "main" }}
+{{- $page := . -}}
+<div class="wrap album music">
+  <p class="crumb"><a href="{{ "/music/" | relURL }}">音乐</a> / {{ .Title }}</p>
+  <header class="book-head">
+    <div class="book-cover square">{{ partial "img.html" (dict "page" . "width" 720 "loading" "eager") }}</div>
+    <div class="book-info">
+      {{ with .Params.genre }}<span class="chip">{{ . }}</span>{{ end }}
+      <h1>{{ .Title }}</h1>
+      <p class="byline">{{ site.Params.author }}<span>·</span>{{ .Date.Format "2006.01.02" }}{{ with .Params.status }}<span>·</span>{{ . }}{{ end }}</p>
+      {{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}
+    </div>
+  </header>
+
+  {{- with .Params.embed }}
+  <div class="embed" data-pagefind-ignore><iframe src="{{ . }}" loading="lazy" title="{{ $page.Title }} 试听" allow="autoplay"></iframe></div>
+  {{- end }}
+
+  {{- with .Params.tracks }}
+  <section class="tracks" aria-labelledby="tr-h" data-pagefind-ignore>
+    <h2 id="tr-h">曲目</h2>
+    <ol>
+      {{- range $i, $t := . }}
+      <li>
+        <span class="tr-no">{{ printf "%02d" (add $i 1) }}</span>
+        <span class="tr-name">{{ $t.title }}{{ with $t.note }}<small>{{ . }}</small>{{ end }}</span>
+        {{- with $t.file }}
+          {{- $src := "" }}
+          {{- if or (hasPrefix . "http://") (hasPrefix . "https://") }}{{ $src = . }}
+          {{- else }}
+            {{- with $page.Resources.GetMatch . }}{{ $src = .RelPermalink }}
+            {{- else }}{{ with site.Params.audioBase }}{{ $src = printf "%s/%s" (strings.TrimSuffix "/" .) $t.file }}{{ end }}{{ end }}
+          {{- end }}
+          {{- if $src }}<audio controls preload="none" src="{{ $src }}"></audio>{{ else }}<small class="muted">音频待上传</small>{{ end }}
+        {{- end }}
+        {{- with $t.length }}<span class="tr-len">{{ . }}</span>{{ end }}
+      </li>
+      {{- end }}
+    </ol>
+  </section>
+  {{- end }}
+
+  {{ with .Content }}<div class="prose album-note" data-pagefind-body>{{ . }}</div>{{ end }}
+  <p class="copyright-note">{{ site.Params.copyright }}</p>
+</div>
+{{ end }}

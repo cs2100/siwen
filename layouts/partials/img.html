@@ -1,0 +1,9 @@
+{{- /* 输出页面封面图（自动压缩为 WebP）。参数：page, width, class, alt, loading, key */ -}}
+{{- $r := partial "cover-res.html" (dict "page" .page "key" (.key | default "cover")) -}}
+{{- $w := .width | default 640 -}}
+{{- with $r -}}
+  {{- $s := .Resize (printf "%dx webp q80" $w) -}}
+  <img src="{{ $s.RelPermalink }}" width="{{ $s.Width }}" height="{{ $s.Height }}" alt="{{ $.alt | default "" }}" loading="{{ $.loading | default "lazy" }}" decoding="async"{{ with $.class }} class="{{ . }}"{{ end }}>
+{{- else -}}
+  <span class="noimg" aria-hidden="true">{{ substr .page.Title 0 1 }}</span>
+{{- end -}}

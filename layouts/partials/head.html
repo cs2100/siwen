@@ -1,0 +1,29 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{- $title := site.Title -}}
+{{- if .IsHome -}}{{ $title = printf "%s · %s" site.Title site.Params.tagline }}{{ else if .Title }}{{ $title = printf "%s | %s" .Title site.Title }}{{ end }}
+<title>{{ $title }}</title>
+{{- $desc := cond (ne .Description "") .Description site.Params.description -}}
+<meta name="description" content="{{ $desc }}">
+<meta name="author" content="{{ site.Params.author }}">
+<link rel="canonical" href="{{ .Permalink }}">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ .Title | default site.Title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:type" content="{{ cond .IsPage "article" "website" }}">
+<meta property="og:url" content="{{ .Permalink }}">
+{{- with partial "cover-res.html" (dict "page" . "key" "cover") }}
+{{- $og := .Fill "1200x630 webp q80" }}
+<meta property="og:image" content="{{ $og.Permalink }}">
+{{- end }}
+<meta name="theme-color" content="#f6f2e8">
+<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ "index.xml" | absURL }}">
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+<script>
+(function(){try{var d=document.documentElement,t=localStorage.getItem('theme');
+if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}
+d.setAttribute('data-theme',t);
+var f=parseInt(localStorage.getItem('fs'),10);if(f>=14&&f<=26){d.style.setProperty('--fs',f+'px')}}catch(e){}})();
+</script>
+{{- $css := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}">

@@ -1,0 +1,7 @@
+public/
+resources/
+.hugo_build.lock
+static/downloads/*.epub
+static/downloads/*.pdf
+__pycache__/
+node_modules/

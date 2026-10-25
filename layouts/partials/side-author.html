@@ -1,0 +1,8 @@
+<section class="side-block author-card">
+  {{- $av := resources.Get site.Params.authorAvatar -}}
+  {{- with $av }}{{ $s := .Fill "240x240 webp q85" }}<img class="avatar" src="{{ $s.RelPermalink }}" width="120" height="120" alt="{{ site.Params.author }}">{{ end }}
+  <h2 class="a-name">{{ site.Params.author }}</h2>
+  <p class="a-title">{{ site.Params.authorTitle }}<br>{{ site.Params.authorSubtitle }}</p>
+  {{ with site.Params.authorQuote }}<blockquote class="a-quote">“{{ . }}”<cite>—— {{ site.Params.author }}</cite></blockquote>{{ end }}
+  {{ partial "social.html" . }}
+</section>

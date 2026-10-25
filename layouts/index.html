@@ -1,0 +1,86 @@
+{{ define "hero" }}
+{{- $h := site.Params.home -}}
+<section class="hero">
+  {{- with resources.Get $h.heroImage }}{{ $s := .Resize "2000x webp q75" }}
+  <img src="{{ $s.RelPermalink }}" width="{{ $s.Width }}" height="{{ $s.Height }}" alt="" fetchpriority="high">
+  {{- end }}
+  <div class="wrap hero-in">
+    <h1>{{ $h.heroTitle | safeHTML }}</h1>
+    <p class="hero-text">{{ $h.heroText | safeHTML }}</p>
+    <p class="hero-sign">—— {{ site.Params.author }}</p>
+  </div>
+</section>
+{{ end }}
+
+{{ define "main" }}
+{{- $stream := where site.RegularPages "Section" "in" (slice "posts" "photography" "music") -}}
+{{- $recent := first 6 $stream.ByDate.Reverse -}}
+{{- $books := where (where site.Pages "Section" "works") "Kind" "section" -}}
+{{- $featured := first 3 (where $books "Params.featured" true).ByWeight -}}
+<div class="wrap home-grid">
+  <div class="home-main">
+    <section class="block" aria-labelledby="recent-h">
+      <header class="block-head">
+        <h2 id="recent-h">近期动态</h2><span class="sub">· 最近的想法、阅读与创作记录</span>
+        <a class="more" href="{{ "/archives/" | relURL }}">查看更多 →</a>
+      </header>
+      <ol class="timeline">
+        {{- range $recent }}
+        <li class="tl-item">
+          <time class="tl-date" datetime="{{ .Date.Format "2006-01-02" }}"><span>{{ .Date.Format "2006" }}</span>{{ .Date.Format "01.02" }}</time>
+          <div class="tl-body">
+            <p class="meta"><span class="chip">{{ partial "label.html" . }}</span></p>
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+            <p class="sum">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 70 }}{{ end }}</p>
+            <a class="more" href="{{ .RelPermalink }}">阅读全文 →</a>
+          </div>
+          <a class="tl-img" href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true">{{ partial "img.html" (dict "page" . "width" 480) }}</a>
+        </li>
+        {{- end }}
+      </ol>
+    </section>
+
+    {{- if $featured }}
+    <section class="block" aria-labelledby="feat-h">
+      <header class="block-head">
+        <h2 id="feat-h">代表作</h2><span class="sub">· 那些值得反复阅读的作品</span>
+        <a class="more" href="{{ "/works/" | relURL }}">查看更多 →</a>
+      </header>
+      <div class="feat-grid">
+        {{- range $featured }}
+        <a class="feat-card" href="{{ .RelPermalink }}">
+          <span class="fc-img">{{ partial "img.html" (dict "page" . "width" 640) }}</span>
+          <span class="fc-body">
+            <span class="chip">{{ .Params.genre }}</span>
+            <strong>{{ .Title }}</strong>
+            <span class="fc-desc">{{ .Description }}</span>
+            <span class="more">查看详情 →</span>
+          </span>
+        </a>
+        {{- end }}
+      </div>
+    </section>
+    {{- end }}
+  </div>
+
+  <aside class="home-side" aria-label="侧栏">
+    {{ partial "side-author.html" . }}
+    {{ partial "side-quicknav.html" . }}
+    {{ partial "side-image.html" . }}
+    {{ partial "side-reading.html" . }}
+  </aside>
+</div>
+
+<div class="wrap">
+  <ul class="cards4">
+    {{- range site.Params.home.cards }}
+    <li>
+      <a href="{{ .link | relURL }}">
+        {{ with resources.Get .image }}{{ $s := .Resize "640x webp q75" }}<img src="{{ $s.RelPermalink }}" width="{{ $s.Width }}" height="{{ $s.Height }}" alt="" loading="lazy">{{ end }}
+        <span class="c4-text"><strong>{{ .title }}</strong><small>{{ .desc }}</small><i aria-hidden="true">→</i></span>
+      </a>
+    </li>
+    {{- end }}
+  </ul>
+</div>
+{{ end }}

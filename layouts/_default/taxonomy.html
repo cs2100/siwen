@@ -1,0 +1,8 @@
+{{ define "main" }}
+<div class="wrap narrow-list">
+  <header class="page-head"><h1>全部标签</h1></header>
+  <p class="tags big">
+    {{- range .Data.Terms.ByCount }}<a class="tag" href="{{ .Page.RelPermalink }}">{{ .Page.Title }}<sup>{{ .Count }}</sup></a>{{ end }}
+  </p>
+</div>
+{{ end }}

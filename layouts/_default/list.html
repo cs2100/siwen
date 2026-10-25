@@ -1,0 +1,9 @@
+{{ define "main" }}
+<div class="wrap narrow-list">
+  {{ partial "page-head.html" . }}
+  <div class="prose">{{ .Content }}</div>
+  <div class="post-list">
+    {{- range .Pages.ByDate.Reverse }}{{ partial "post-card.html" . }}{{ end }}
+  </div>
+</div>
+{{ end }}

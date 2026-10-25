@@ -1,0 +1,18 @@
+{{- $rel := first 4 (site.RegularPages.Related . | complement (slice .)) -}}
+{{- if lt (len $rel) 4 -}}
+  {{- $more := where (where site.RegularPages "Section" "posts") "RelPermalink" "ne" .RelPermalink -}}
+  {{- $rel = first 4 (union $rel $more.ByDate.Reverse) -}}
+{{- end -}}
+{{- if and (eq .Section "posts") $rel }}
+<section class="side-block">
+  <h2 class="side-title">相关文章</h2>
+  <ul class="mini-list">
+  {{- range $rel }}
+    <li>
+      <a class="ml-img" href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true">{{ partial "img.html" (dict "page" . "width" 160) }}</a>
+      <div><a class="ml-title" href="{{ .RelPermalink }}">{{ .Title }}</a><span class="ml-meta">{{ partial "label.html" . }} · {{ .Date.Format "2006.01.02" }}</span></div>
+    </li>
+  {{- end }}
+  </ul>
+</section>
+{{- end }}

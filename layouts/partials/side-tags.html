@@ -1,0 +1,9 @@
+{{- $terms := site.Taxonomies.tags.ByCount -}}
+{{- if $terms }}
+<section class="side-block">
+  <h2 class="side-title">热门标签</h2>
+  <p class="tags">
+    {{- range first 12 $terms }}<a class="tag" href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a>{{ end }}
+  </p>
+</section>
+{{- end }}

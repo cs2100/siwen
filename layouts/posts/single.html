@@ -1,0 +1,33 @@
+{{ define "hero" }}
+{{- $cover := partial "cover-res.html" (dict "page" . "key" "cover") -}}
+<section class="hero article-hero{{ if not $cover }} no-cover{{ end }}">
+  {{- with $cover }}{{ $s := .Fill "2000x560 webp q75" }}<img src="{{ $s.RelPermalink }}" width="{{ $s.Width }}" height="{{ $s.Height }}" alt="" fetchpriority="high">{{ end }}
+  <div class="wrap hero-in">
+    <p class="crumb">{{ partial "label.html" . }}{{ with .Params.subcategory }} · {{ . }}{{ end }}</p>
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="hero-text">{{ . }}</p>{{ end }}
+    <p class="byline">{{ site.Params.author }}<span>·</span><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time><span>·</span>约 {{ partial "readtime.html" . }} 分钟阅读</p>
+  </div>
+</section>
+{{ end }}
+
+{{ define "main" }}
+<div class="wrap article-grid">
+  <article class="article" data-pagefind-body>
+    <div class="prose">{{ .Content }}</div>
+    {{- with .Params.tags }}
+    <p class="keywords" data-pagefind-ignore>关键词：{{ range . }}<a href="{{ printf "tags/%s/" (. | urlize) | relLangURL }}">{{ . }}</a>{{ end }}</p>
+    {{- end }}
+    <nav class="pager" aria-label="上下篇" data-pagefind-ignore>
+      {{- with .PrevInSection }}<a class="prev" href="{{ .RelPermalink }}"><span class="btn ghost">← 上一篇</span><small>{{ .Title }}</small></a>{{ else }}<span></span>{{ end }}
+      {{- with .NextInSection }}<a class="next" href="{{ .RelPermalink }}"><small>{{ .Title }}</small><span class="btn ghost">下一篇 →</span></a>{{ end }}
+    </nav>
+  </article>
+  <aside class="article-side" aria-label="侧栏" data-pagefind-ignore>
+    {{ partial "side-author.html" . }}
+    {{ partial "side-related.html" . }}
+    {{ partial "side-tags.html" . }}
+    {{ partial "side-recommend.html" . }}
+  </aside>
+</div>
+{{ end }}

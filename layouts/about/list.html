@@ -1,0 +1,9 @@
+{{ define "main" }}
+<div class="wrap about">
+  <div class="about-side">{{ partial "side-author.html" . }}</div>
+  <article class="about-main" data-pagefind-body>
+    <header class="page-head"><h1>{{ .Title }}</h1></header>
+    <div class="prose">{{ .Content }}</div>
+  </article>
+</div>
+{{ end }}

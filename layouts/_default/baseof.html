@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="{{ site.LanguageCode | default "zh-CN" }}" data-theme="light">
+<head>
+{{- partial "head.html" . -}}
+</head>
+<body class="kind-{{ .Kind }}{{ with .Section }} sec-{{ . }}{{ end }}">
+<a class="skip" href="#main">跳到正文</a>
+{{- partial "header.html" . -}}
+{{- block "hero" . }}{{ end -}}
+<main id="main">
+{{- block "main" . }}{{ end -}}
+</main>
+{{- partial "footer.html" . -}}
+{{- $js := resources.Get "js/main.js" | resources.Minify | resources.Fingerprint -}}
+<script src="{{ $js.RelPermalink }}" defer></script>
+{{- block "scripts" . }}{{ end -}}
+</body>
+</html>

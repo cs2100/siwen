@@ -1,0 +1,16 @@
+{{- /* “今日阅读”：数据在 data/reading.yaml，想隐藏就删掉这个文件 */ -}}
+{{- with site.Data.reading }}
+<section class="side-block reading" id="reading">
+  <h2 class="side-title">今日阅读</h2>
+  <div class="rd">
+    {{ with resources.Get .cover }}{{ $s := .Resize "120x webp q85" }}<img src="{{ $s.RelPermalink }}" width="{{ $s.Width }}" height="{{ $s.Height }}" alt="" loading="lazy">{{ end }}
+    <div class="rd-info">
+      <strong>《{{ .title }}》</strong>
+      <span>{{ .author }}</span>
+      <div class="bar" role="progressbar" aria-valuenow="{{ .progress }}" aria-valuemin="0" aria-valuemax="100"><i style="width:{{ .progress }}%"></i></div>
+      <em>{{ .progress }}%</em>
+    </div>
+  </div>
+  {{ with .link }}<a class="more" href="{{ . | relURL }}">阅读记录 →</a>{{ end }}
+</section>
+{{- end }}

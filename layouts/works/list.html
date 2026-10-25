@@ -1,0 +1,71 @@
+{{ define "main" }}
+{{- if .Parent.IsHome -}}
+{{- /* ============ 书架：全部文集 ============ */ -}}
+<div class="wrap">
+  {{ partial "page-head.html" . }}
+  {{- $genres := slice -}}
+  {{- range .Pages }}{{ with .Params.genre }}{{ $genres = $genres | append . }}{{ end }}{{ end -}}
+  {{- $genres = $genres | uniq -}}
+  {{- if gt (len $genres) 1 }}
+  <div class="filterbar" role="group" aria-label="按类型筛选">
+    <button type="button" class="chipbtn is-on" data-filter="*">全部</button>
+    {{- range $genres }}<button type="button" class="chipbtn" data-filter="{{ . }}">{{ . }}</button>{{ end }}
+  </div>
+  {{- end }}
+  <div class="shelf">
+    {{- range .Pages.ByWeight }}
+    <a class="book-card" href="{{ .RelPermalink }}" data-genre="{{ .Params.genre }}">
+      <span class="bc-img">{{ partial "img.html" (dict "page" . "width" 640) }}</span>
+      <span class="bc-body">
+        <span class="chip">{{ .Params.genre }}</span>
+        <strong>{{ .Title }}</strong>
+        <span class="bc-desc">{{ .Description }}</span>
+        <span class="bc-meta">{{ partial "wordtext.html" . }} · {{ len .Pages }} {{ cond (eq .Params.genre "随笔") "篇" "章/篇" }}{{ with .Params.status }} · {{ . }}{{ end }}</span>
+      </span>
+    </a>
+    {{- end }}
+  </div>
+  {{ with .Content }}<div class="prose shelf-note">{{ . }}</div>{{ end }}
+</div>
+
+{{- else -}}
+{{- /* ============ 一部文集的书页：封面、简介、目录 ============ */ -}}
+{{- $id := path.Base .File.Dir -}}
+{{- $chapters := .Pages.ByWeight -}}
+<div class="wrap book">
+  <p class="crumb"><a href="{{ "/works/" | relURL }}">作品</a> / {{ .Title }}</p>
+  <header class="book-head">
+    <div class="book-cover">{{ partial "img.html" (dict "page" . "width" 720 "loading" "eager") }}</div>
+    <div class="book-info">
+      <span class="chip">{{ .Params.genre }}</span>
+      <h1>{{ .Title }}</h1>
+      <p class="lede">{{ .Description }}</p>
+      <ul class="facts">
+        <li>{{ partial "wordtext.html" . }}</li>
+        <li>共 {{ len $chapters }} {{ cond (eq .Params.genre "随笔") "篇" "章/篇" }}</li>
+        {{- with .Params.completed }}<li>{{ (time.AsTime .).Format "2006.01.02" }} 完稿</li>{{ end }}
+        {{- with .Params.status }}<li>{{ . }}</li>{{ end }}
+      </ul>
+      <div class="actions" data-pagefind-ignore>
+        {{- if $chapters }}{{ with index $chapters 0 }}<a class="btn primary" href="{{ .RelPermalink }}">开始阅读</a>{{ end }}{{ end }}
+        <a class="btn resume" href="#" data-resume="{{ .RelPermalink }}" hidden>继续阅读</a>
+        {{- if fileExists (printf "static/downloads/%s.epub" $id) }}<a class="btn ghost" href="{{ printf "downloads/%s.epub" $id | relURL }}" download>下载 EPUB</a>{{ end }}
+        {{- if fileExists (printf "static/downloads/%s.pdf" $id) }}<a class="btn ghost" href="{{ printf "downloads/%s.pdf" $id | relURL }}" download>下载 PDF</a>{{ end }}
+      </div>
+    </div>
+  </header>
+
+  {{ with .Content }}<div class="prose book-preface" data-pagefind-body>{{ . }}</div>{{ end }}
+
+  <section class="toc" aria-labelledby="toc-h" data-pagefind-ignore>
+    <h2 id="toc-h">目录</h2>
+    <ol>
+      {{- range $chapters }}
+      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a><span>{{ div (add .WordCount 50) 100 | mul 100 }} 字</span></li>
+      {{- end }}
+    </ol>
+  </section>
+  <p class="copyright-note" data-pagefind-ignore>{{ site.Params.copyright }}</p>
+</div>
+{{- end -}}
+{{ end }}

@@ -1,0 +1,8 @@
+<article class="post-card">
+  <a class="pc-img" href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true">{{ partial "img.html" (dict "page" . "width" 480) }}</a>
+  <div class="pc-body">
+    <p class="meta"><span class="chip">{{ partial "label.html" . }}</span><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time></p>
+    <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+    <p class="sum">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 90 }}{{ end }}</p>
+  </div>
+</article>

@@ -1,0 +1,14 @@
+{{- /* 一部文集的字数文本。信息头写了 words 就用它，否则自动累加各章字数。 */ -}}
+{{- $n := 0 -}}
+{{- if .Params.words -}}
+  {{- $n = .Params.words -}}
+{{- else -}}
+  {{- range .Pages }}{{ $n = add $n .WordCount }}{{ end -}}
+{{- end -}}
+{{- $out := "" -}}
+{{- if ge $n 10000 -}}
+  {{- $out = printf "约 %s 万字" (strings.TrimSuffix ".0" (printf "%.1f" (div (float $n) 10000))) -}}
+{{- else -}}
+  {{- $out = printf "约 %d 字" $n -}}
+{{- end -}}
+{{- return $out -}}

@@ -1,0 +1,12 @@
+{{ define "main" }}
+<div class="wrap narrow-list">
+  {{ partial "page-head.html" . }}
+  <link href="{{ "pagefind/pagefind-ui.css" | relURL }}" rel="stylesheet">
+  <div id="search" class="search-box" data-pagefind-ignore>
+    <p class="muted">搜索功能在站点发布后可用（构建时由 Pagefind 生成索引）。本地预览请先运行 <code>hugo --minify &amp;&amp; npx pagefind --site public</code>。</p>
+  </div>
+</div>
+{{ end }}
+{{ define "scripts" }}
+<script src="{{ "pagefind/pagefind-ui.js" | relURL }}" onload="new PagefindUI({ element: '#search', showSubResults: true, showImages: false, resetStyles: false, excerptLength: 40 });"></script>
+{{ end }}

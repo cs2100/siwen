@@ -1,0 +1,2 @@
+{{- /* 中文阅读时长（按每分钟约 400 字估算，至少 1 分钟） */ -}}
+{{- return (int (math.Max 1 (math.Ceil (div (float .WordCount) 400)))) -}}

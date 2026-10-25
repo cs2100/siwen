@@ -1,0 +1,23 @@
+{{ define "main" }}
+{{- $title := .Title -}}
+<div class="wrap album">
+  <p class="crumb"><a href="{{ "/photography/" | relURL }}">摄影</a> / {{ .Title }}</p>
+  <header class="page-head">
+    <h1>{{ .Title }}</h1>
+    <p class="byline">{{ .Date.Format "2006.01.02" }}{{ with .Params.place }}<span>·</span>{{ . }}{{ end }}{{ with .Params.camera }}<span>·</span>{{ . }}{{ end }}</p>
+    {{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}
+  </header>
+  {{ with .Content }}<div class="prose album-note" data-pagefind-body>{{ . }}</div>{{ end }}
+  {{- $imgs := .Resources.ByType "image" -}}
+  <div class="gallery" data-gallery>
+    {{- range $i, $im := $imgs }}
+    {{- $big := $im.Resize "1800x webp q82" }}
+    {{- $thumb := $im.Resize "720x webp q78" }}
+    <a href="{{ $big.RelPermalink }}" data-lightbox data-caption="{{ $title }} · {{ add $i 1 }}/{{ len $imgs }}">
+      <img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="{{ $title }}，第 {{ add $i 1 }} 张" loading="lazy" decoding="async">
+    </a>
+    {{- end }}
+  </div>
+  <p class="copyright-note">{{ site.Params.copyright }}</p>
+</div>
+{{ end }}

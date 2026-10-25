@@ -1,0 +1,6 @@
+{{- with site.Params.home.sideImage }}{{ with resources.Get . }}
+<section class="side-block side-photo">
+  {{ $s := .Resize "600x webp q80" }}<img src="{{ $s.RelPermalink }}" width="{{ $s.Width }}" height="{{ $s.Height }}" alt="" loading="lazy">
+  <p>{{ site.Params.home.sideCaption | safeHTML }}</p>
+</section>
+{{ end }}{{ end -}}

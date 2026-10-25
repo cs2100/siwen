@@ -1,0 +1,3 @@
+{{- /* 内容的分类小标签：优先用信息头里的 category，否则按栏目默认 */ -}}
+{{- $defaults := dict "posts" "文章" "photography" "摄影" "music" "音乐" "works" "作品" -}}
+{{- return (or .Params.category (index $defaults .Section) "") -}}

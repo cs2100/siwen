@@ -1,0 +1,2 @@
+{{- $s := site.Params.seal | default "陈玄" -}}
+<svg class="seal" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="1" y="1" width="22" height="22" rx="2.5" fill="var(--seal)"/><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="1.6" fill="none" stroke="var(--paper)" stroke-opacity=".55" stroke-width=".7"/><text x="12" y="10.6" text-anchor="middle" font-size="8.6" fill="var(--paper)" font-weight="700">{{ substr $s 0 1 }}</text><text x="12" y="19.4" text-anchor="middle" font-size="8.6" fill="var(--paper)" font-weight="700">{{ substr $s 1 1 }}</text></svg>

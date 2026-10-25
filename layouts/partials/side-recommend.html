@@ -1,0 +1,15 @@
+{{- $rec := first 2 (where (where site.RegularPages "Section" "posts") "Params.recommend" true).ByDate.Reverse -}}
+{{- if $rec }}
+<section class="side-block">
+  <h2 class="side-title">推荐阅读</h2>
+  <ul class="rec">
+  {{- range $rec }}
+    <li>
+      <a href="{{ .RelPermalink }}">{{ partial "img.html" (dict "page" . "width" 480) }}</a>
+      <a class="ml-title" href="{{ .RelPermalink }}">{{ .Title }}</a>
+      <span class="ml-meta">{{ partial "label.html" . }} · {{ .Date.Format "2006.01.02" }}</span>
+    </li>
+  {{- end }}
+  </ul>
+</section>
+{{- end }}

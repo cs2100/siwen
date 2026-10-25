@@ -1,0 +1,5 @@
+<ul class="social">
+{{- range site.Params.social }}
+  <li><a href="{{ if hasPrefix .url "/" }}{{ .url | relURL }}{{ else }}{{ .url }}{{ end }}" aria-label="{{ .name }}" title="{{ .name }}"{{ if hasPrefix .url "http" }} rel="noopener me" target="_blank"{{ end }}>{{ partial "icon.html" (.icon | default "link") }}</a></li>
+{{- end }}
+</ul>
