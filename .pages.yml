@@ -1,0 +1,73 @@
+# Pages CMS 配置：在网页后台里编辑“文章”（content/posts）。
+# 登录 https://app.pagescms.org ，授权仓库后即可使用。
+# 封面图：上传到 assets/images/covers/，文章里会写入 images/covers/文件名
+
+media:
+  input: assets/images/covers
+  output: images/covers
+
+content:
+  - name: posts
+    label: 文章
+    type: collection
+    path: content/posts
+    format: yaml-frontmatter
+    exclude: [_index.md]
+    filename:
+      template: "{year}-{month}-{day}-{hour}{minute}.md"
+      field: create
+    view:
+      primary: title
+      fields: [title, date, category]
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: 标题
+        type: string
+        required: true
+
+      - name: date
+        label: 日期
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+
+      - name: category
+        label: 分类
+        type: select
+        required: true
+        default: 随笔
+        options:
+          # 想增加新分类，在下面照样加一行即可
+          values: [随笔, 时评, 生活, 阅读, 书话, 摄影, 音乐]
+
+      - name: tags
+        label: 标签（一个一行）
+        type: string
+        list: true
+
+      - name: description
+        label: 一句话简介（可不填）
+        type: text
+
+      - name: cover
+        label: 题图（可不填）
+        type: image
+        options:
+          extensions: [jpg, jpeg, png, webp]
+          rename: safe
+
+      - name: draft
+        label: 草稿（打勾则不公开）
+        type: boolean
+        default: false
+
+      - name: body
+        label: 正文
+        type: rich-text
+        options:
+          format: markdown
