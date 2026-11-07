@@ -1,13 +1,21 @@
 {{ define "hero" }}
-{{- /* 横幅图用单独的 banner 字段（宽幅、无字）；没有就是纯色标题带。cover 只用于列表缩略图 */ -}}
+{{- /* 有 banner（宽幅无字图）：整幅横幅，标题压在左侧。
+       没有 banner 但有 cover：纯色标题带，标题在左，cover 原比例完整放在右侧。
+       都没有：纯色标题带。 */ -}}
 {{- $banner := partial "cover-res.html" (dict "page" . "key" "banner") -}}
-<section class="hero article-hero{{ if not $banner }} no-cover{{ end }}">
+{{- $cover := partial "cover-res.html" (dict "page" . "key" "cover") -}}
+<section class="hero article-hero{{ if not $banner }} no-cover{{ end }}{{ if and (not $banner) $cover }} with-card{{ end }}">
   {{- with $banner }}{{ $s := .Fill "2000x560 webp q75" }}<img src="{{ $s.RelPermalink }}" width="{{ $s.Width }}" height="{{ $s.Height }}" alt="" fetchpriority="high">{{ end }}
   <div class="wrap hero-in">
-    <p class="crumb">{{ partial "label.html" . }}{{ with .Params.subcategory }} · {{ . }}{{ end }}</p>
-    <h1>{{ .Title }}</h1>
-    {{ with .Description }}<p class="hero-text">{{ . }}</p>{{ end }}
-    <p class="byline">{{ site.Params.author }}<span>·</span><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time><span>·</span>约 {{ partial "readtime.html" . }} 分钟阅读</p>
+    <div class="hero-main">
+      <p class="crumb">{{ partial "label.html" . }}{{ with .Params.subcategory }} · {{ . }}{{ end }}</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}<p class="hero-text">{{ . }}</p>{{ end }}
+      <p class="byline">{{ site.Params.author }}<span>·</span><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time><span>·</span>约 {{ partial "readtime.html" . }} 分钟阅读</p>
+    </div>
+    {{- if and (not $banner) $cover }}{{ $c := $cover.Resize "960x webp q80" }}
+    <figure class="hero-card"><img src="{{ $c.RelPermalink }}" width="{{ $c.Width }}" height="{{ $c.Height }}" alt="" fetchpriority="high"></figure>
+    {{- end }}
   </div>
 </section>
 {{ end }}

@@ -91,6 +91,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .byline { color: var(--ink-3); font-size: .85rem; letter-spacing: .06em; }
 .byline span { margin: 0 .6em; }
 .article-hero .byline { margin-top: 26px; }
+.article-hero.with-card .hero-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: 48px; align-items: center; padding-block: 44px; }
+.hero-card { margin: 0; }
+.hero-card img { display: block; width: 100%; height: auto; max-height: 300px; object-fit: contain; border-radius: 6px; box-shadow: 0 10px 30px rgba(60, 45, 30, .12); background: var(--paper-2); }
+[data-theme="dark"] .hero-card img { filter: brightness(.85); }
 
 /* ---------- 通用块 ---------- */
 .block { margin-top: 40px; }
@@ -416,6 +420,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .article-side .author-card { padding-top: 24px; }
   .rec img { display: none; }
   .rec li + li { margin-top: 14px; }
+}
+@media (max-width: 900px) {
+  .article-hero.with-card .hero-in { grid-template-columns: 1fr; gap: 24px; padding-block: 34px 30px; }
+  .hero-card img { max-height: none; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 @media print {
