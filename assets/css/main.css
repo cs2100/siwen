@@ -386,6 +386,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .brand-name { font-size: 1.4rem; }
   .hero::after { background: linear-gradient(0deg, var(--paper) 0%, var(--paper) 45%, transparent 100%); }
   .hero-in { padding-block: 34px 30px; }
+  .article-hero > img { object-position: 88% 50%; }
   .timeline::before, .tl-item::before { display: none; }
   .tl-item { grid-template-columns: 1fr 112px; gap: 4px 14px; }
   .tl-date { grid-column: 1 / -1; padding-top: 0; display: flex; gap: 8px; }
