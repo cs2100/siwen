@@ -55,7 +55,14 @@ content:
         type: text
 
       - name: cover
-        label: 题图（可不填）
+        label: 列表缩略图（可不填，16:9 的图即可，带字也行）
+        type: image
+        options:
+          extensions: [jpg, jpeg, png, webp]
+          rename: safe
+
+      - name: banner
+        label: 文章页顶部横幅图（可不填：宽幅 3.5:1、不带字、画面主体靠右；不填则是纯色标题带）
         type: image
         options:
           extensions: [jpg, jpeg, png, webp]
