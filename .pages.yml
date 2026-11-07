@@ -43,7 +43,7 @@ content:
         default: 随笔
         options:
           # 想增加新分类，在下面照样加一行即可
-          values: [随笔, 时评, 生活, 阅读, 书话, 摄影, 音乐]
+          values: [随笔, 小说, 时评, 生活, 阅读, 书话, 摄影, 音乐]
 
       - name: tags
         label: 标签（一个一行）
