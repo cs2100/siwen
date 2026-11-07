@@ -83,7 +83,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .hero h1 { font-size: clamp(1.45rem, 2.6vw, 2rem); line-height: 1.75; letter-spacing: .1em; max-width: 24em; }
 .hero-text { margin-top: 18px; color: var(--ink-2); font-size: .88rem; letter-spacing: .08em; line-height: 2; max-width: 28em; }
 .hero-sign { margin-top: 18px; color: var(--ink-3); font-size: .85rem; letter-spacing: .1em; }
-.article-hero .hero-in { padding-block: 64px 54px; }
+.article-hero .hero-in { padding-block: 56px 40px; }
 .article-hero.no-cover::after { display: none; }
 .article-hero .crumb { color: var(--ink-3); font-size: .85rem; letter-spacing: .08em; margin-bottom: 14px; }
 .article-hero h1 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); letter-spacing: .18em; }
@@ -274,6 +274,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* 文章页 */
 .article-grid { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 0 64px; padding-block: 40px 80px; }
 .article { max-width: 680px; }
+.article-cover { margin: 0 0 32px; }
+.article-cover img { display: block; width: 100%; height: auto; border-radius: 6px; background: var(--paper-2); }
+[data-theme="dark"] .article-cover img { filter: brightness(.85); }
 .article .prose p { text-align: justify; }
 .keywords { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: .78rem; }
 .keywords a { margin-left: 1em; }

@@ -1,7 +1,6 @@
 {{ define "hero" }}
-{{- $cover := partial "cover-res.html" (dict "page" . "key" "cover") -}}
-<section class="hero article-hero{{ if not $cover }} no-cover{{ end }}">
-  {{- with $cover }}{{ $s := .Fill "2000x560 webp q75" }}<img src="{{ $s.RelPermalink }}" width="{{ $s.Width }}" height="{{ $s.Height }}" alt="" fetchpriority="high">{{ end }}
+{{- /* 题图不再做成被裁切的横幅，而是放在正文顶部按原比例完整显示 */ -}}
+<section class="hero article-hero no-cover">
   <div class="wrap hero-in">
     <p class="crumb">{{ partial "label.html" . }}{{ with .Params.subcategory }} · {{ . }}{{ end }}</p>
     <h1>{{ .Title }}</h1>
@@ -14,6 +13,9 @@
 {{ define "main" }}
 <div class="wrap article-grid">
   <article class="article" data-pagefind-body>
+    {{- with partial "cover-res.html" (dict "page" . "key" "cover") }}{{ $s := .Resize "1360x webp q80" }}
+    <figure class="article-cover"><img src="{{ $s.RelPermalink }}" width="{{ $s.Width }}" height="{{ $s.Height }}" alt="" fetchpriority="high"></figure>
+    {{- end }}
     <div class="prose">{{ .Content }}</div>
     {{- with .Params.tags }}
     <p class="keywords" data-pagefind-ignore>关键词：{{ range . }}<a href="{{ printf "tags/%s/" (. | urlize) | relLangURL }}">{{ . }}</a>{{ end }}</p>
