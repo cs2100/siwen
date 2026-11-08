@@ -1,9 +1,14 @@
 {{- /* 输出页面封面图（自动压缩为 WebP）。参数：page, width, class, alt, loading, key */ -}}
 {{- $r := partial "cover-res.html" (dict "page" .page "key" (.key | default "cover")) -}}
+{{- /* 没有列表图时，退而使用横幅图（宽幅图按“主体靠右”的规则取景） */ -}}
+{{- $fromBanner := false -}}
+{{- if and (not $r) (eq (.key | default "cover") "cover") -}}
+  {{- with partial "cover-res.html" (dict "page" .page "key" "banner") -}}{{- $r = . -}}{{- $fromBanner = true -}}{{- end -}}
+{{- end -}}
 {{- $w := .width | default 640 -}}
 {{- with $r -}}
   {{- $s := .Resize (printf "%dx webp q80" $w) -}}
-  <img src="{{ $s.RelPermalink }}" width="{{ $s.Width }}" height="{{ $s.Height }}" alt="{{ $.alt | default "" }}" loading="{{ $.loading | default "lazy" }}" decoding="async"{{ with $.class }} class="{{ . }}"{{ end }}>
+  <img src="{{ $s.RelPermalink }}" width="{{ $s.Width }}" height="{{ $s.Height }}" alt="{{ $.alt | default "" }}" loading="{{ $.loading | default "lazy" }}" decoding="async"{{ if $fromBanner }} style="object-position:78% 62%"{{ end }}{{ with $.class }} class="{{ . }}"{{ end }}>
 {{- else -}}
   <span class="noimg" aria-hidden="true">{{ substr .page.Title 0 1 }}</span>
 {{- end -}}

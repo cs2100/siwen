@@ -12,7 +12,7 @@
 <meta property="og:description" content="{{ $desc }}">
 <meta property="og:type" content="{{ cond .IsPage "article" "website" }}">
 <meta property="og:url" content="{{ .Permalink }}">
-{{- with partial "cover-res.html" (dict "page" . "key" "cover") }}
+{{- with (partial "cover-res.html" (dict "page" . "key" "cover")) | or (partial "cover-res.html" (dict "page" . "key" "banner")) }}
 {{- $og := .Fill "1200x630 webp q80" }}
 <meta property="og:image" content="{{ $og.Permalink }}">
 {{- end }}
