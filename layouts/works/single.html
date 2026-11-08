@@ -11,7 +11,7 @@
 {{- end -}}
 <div class="progress" data-progress aria-hidden="true"><i></i></div>
 <article class="reader" data-book="{{ $book.RelPermalink }}" data-book-title="{{ $book.Title }}" data-chapter-title="{{ .Title }}" data-pagefind-body>
-  <p class="crumb" data-pagefind-ignore><a href="{{ "/works/" | relURL }}">作品</a> / <a href="{{ $book.RelPermalink }}">{{ $book.Title }}</a></p>
+  <p class="crumb" data-pagefind-ignore><a href="{{ "works/" | relURL }}">作品</a> / <a href="{{ $book.RelPermalink }}">{{ $book.Title }}</a></p>
   <header class="reader-head">
     <h1>{{ .Title }}</h1>
     <p class="meta" data-pagefind-ignore>{{ $book.Title }} · 第 {{ $idx }} / {{ len $pages }} 篇 · 约 {{ partial "readtime.html" . }} 分钟</p>

@@ -33,7 +33,7 @@
 {{- $id := path.Base .File.Dir -}}
 {{- $chapters := .Pages.ByWeight -}}
 <div class="wrap book">
-  <p class="crumb"><a href="{{ "/works/" | relURL }}">作品</a> / {{ .Title }}</p>
+  <p class="crumb"><a href="{{ "works/" | relURL }}">作品</a> / {{ .Title }}</p>
   <header class="book-head">
     <div class="book-cover">{{ partial "img.html" (dict "page" . "width" 720 "loading" "eager") }}</div>
     <div class="book-info">

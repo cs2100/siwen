@@ -11,6 +11,6 @@
       <em>{{ .progress }}%</em>
     </div>
   </div>
-  {{ with .link }}<a class="more" href="{{ . | relURL }}">阅读记录 →</a>{{ end }}
+  {{ with .link }}<a class="more" href="{{ strings.TrimPrefix "/" . | relURL }}">阅读记录 →</a>{{ end }}
 </section>
 {{- end }}

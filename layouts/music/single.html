@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{- $page := . -}}
 <div class="wrap album music">
-  <p class="crumb"><a href="{{ "/music/" | relURL }}">音乐</a> / {{ .Title }}</p>
+  <p class="crumb"><a href="{{ "music/" | relURL }}">音乐</a> / {{ .Title }}</p>
   <header class="book-head">
     <div class="book-cover square">{{ partial "img.html" (dict "page" . "width" 720 "loading" "eager") }}</div>
     <div class="book-info">
