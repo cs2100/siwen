@@ -93,9 +93,9 @@ timeZone = "Asia/Shanghai"
   tagline = "写作 · 阅读 · 摄影 · 音乐 · 生活"
   footerTagline = "文字 · 思考 · 生活"
   author = "陈玄"
-  authorTitle = "写作者 · 随笔创作者"
+  authorTitle = "一个自由的写作者"
   authorSubtitle = "文学评论人"
-  authorQuote = "生活不止眼前的苟且，还有诗和远方。"
+  authorQuote = "思考无罪，装逼可耻。"
   authorAvatar = "images/avatar.jpg"
   seal = "陈玄"                       # 印章里的两个字
   # 版权声明：全文公开的原创作品，请自行决定保留所有权利或选用 CC 协议
